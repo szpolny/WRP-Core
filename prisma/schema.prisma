@@ -6,3 +6,24 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Player {
+  id         Int         @id @default(autoincrement())
+  email      String      @unique
+  password   String
+  name       String
+  steamId    String
+  characters Character[]
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+}
+
+model Character {
+  id        Int      @id @default(autoincrement())
+  firstName String
+  lastName  String
+  playerId  Int
+  user      Player   @relation(fields: [playerId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
