@@ -3,6 +3,20 @@ import type { Deferrals } from "./citizenfx.types";
 
 const prisma = new PrismaClient();
 
+on("resourceStart", (resourceName: string) => {
+  if (GetCurrentResourceName() !== resourceName) {
+    return;
+  }
+
+  const steamApiKey = GetConvar("steam_webApiKey", "");
+
+  if (steamApiKey === "" || steamApiKey === "null" || steamApiKey === "none") {
+    console.error(
+      "Please set the steam_webApiKey convar in your server.cfg file.",
+    );
+  }
+});
+
 on(
   "playerConnecting",
   (
