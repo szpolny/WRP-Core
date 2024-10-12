@@ -4,6 +4,7 @@ const { filelocPlugin } = require("esbuild-plugin-fileloc");
 const WATCH = process.argv.includes("--watch");
 
 const baseOptions = {
+  logLevel: "info",
   bundle: true,
   absWorkingDir: process.cwd(),
 };
@@ -38,9 +39,13 @@ const build = async () => {
         console.log("[ESBuild] Client build complete");
       });
 
+      client.dispose();
+
       server.rebuild().then(() => {
         console.log("[ESBuild] Server build complete");
       });
+
+      server.dispose();
     }
   } catch (error) {
     console.log("[ESBuild] Build failed with error");
