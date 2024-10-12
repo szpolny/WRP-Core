@@ -1,4 +1,7 @@
+import { PrismaClient } from "@prisma/client";
 import type { Deferrals } from "./citizenfx.types";
+
+const prisma = new PrismaClient();
 
 on(
   "playerConnecting",
@@ -31,3 +34,11 @@ on(
     }, 1);
   },
 );
+
+on("onResourceStop", (resourceName: string) => {
+  if (GetCurrentResourceName() !== resourceName) {
+    return;
+  }
+
+  prisma.$disconnect().then(() => console.log("Prisma disconnected."));
+});
