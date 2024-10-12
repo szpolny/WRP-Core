@@ -11,6 +11,9 @@ importers:
       '@prisma/client':
         specifier: ^5.20.0
         version: 5.20.0(prisma@5.20.0)
+      dotenv:
+        specifier: ^16.4.5
+        version: 16.4.5
     devDependencies:
       '@biomejs/biome':
         specifier: ^1.9.3
@@ -273,6 +276,10 @@ packages:
     resolution: {integrity: sha512-+q/t7Ekv1EDY2l6Gda6LLiX14rU9TV20Wa3ofeQmwPFZbOMo9DXrLbOjFaaclkXKWidIaopwAObQDqwWtGUjqg==}
     engines: {node: '>= 4.0.0'}
 
+  dotenv@16.4.5:
+    resolution: {integrity: sha512-ZmdL2rui+eB2YwhsWzjInR8LldtZHGDoQ1ugH85ppHKwpUHL7j7rN0Ti9NCnGiQbhaZ11FpR+7ao1dNsmduNUg==}
+    engines: {node: '>=12'}
+
   esbuild-plugin-fileloc@0.0.6:
     resolution: {integrity: sha512-NfuXDBRDC9qeZ6bSr+FlBqOwtbe4uwkxYnrgyF5aA6LmMwUD1u0B8g8blq2kGB2xIf3x7lgUNq6K8pjlO8is/g==}
 
@@ -456,6 +463,8 @@ snapshots:
       undici-types: 6.19.8
 
   at-least-node@1.0.0: {}
+
+  dotenv@16.4.5: {}
 
   esbuild-plugin-fileloc@0.0.6:
     dependencies:

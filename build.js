@@ -1,3 +1,4 @@
+require("dotenv").config();
 const esbuild = require("esbuild");
 const { filelocPlugin } = require("esbuild-plugin-fileloc");
 
@@ -22,6 +23,9 @@ const targetOptions = [
     platform: "node",
     outfile: "./build/server/index.js",
     plugins: [filelocPlugin()],
+    define: {
+      "process.env.DATABASE_URL": `"${process.env.DATABASE_URL}"`,
+    },
     ...baseOptions,
   },
 ];

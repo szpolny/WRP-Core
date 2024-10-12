@@ -1,7 +1,14 @@
+import "dotenv/config";
 import { PrismaClient } from "@prisma/client";
 import type { Deferrals } from "./citizenfx.types";
 
-const prisma = new PrismaClient();
+const prisma = new PrismaClient({
+  datasources: {
+    db: {
+      url: process.env.DATABASE_URL,
+    },
+  },
+});
 
 on("resourceStart", (resourceName: string) => {
   if (GetCurrentResourceName() !== resourceName) {
@@ -42,9 +49,17 @@ on(
       if (!steamId) {
         setKickReason("Steam must be running to join this server.");
         deferrals.done("Steam must be running to join this server.");
+      } else {
+        prisma.player.findUnique({ where: { steamId } }).then((player) => {
+          if (!player) {
+            prisma.player.create({ data: { name, steamId } }).then(() => {
+              setTimeout(() => deferrals.done(), 1);
+            });
+          } else {
+            setTimeout(() => deferrals.done(), 1);
+          }
+        });
       }
-
-      setTimeout(() => deferrals.done(), 1);
     }, 1);
   },
 );
