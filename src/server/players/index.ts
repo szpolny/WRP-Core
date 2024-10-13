@@ -1,12 +1,18 @@
 import type { PrismaClient } from "@prisma/client";
 import { prefix } from "..";
 import type { Deferrals } from "../citizenfx.types";
+import LicenseController from "./license";
+import RolesController from "./roles";
 
 export default class PlayersController {
   private prisma: PrismaClient;
+  private licenseController: LicenseController;
+  private rolesController: RolesController;
 
   constructor(prisma: PrismaClient) {
     this.prisma = prisma;
+    this.licenseController = new LicenseController();
+    this.rolesController = new RolesController(prisma);
 
     on(
       "playerConnecting",
@@ -28,19 +34,10 @@ export default class PlayersController {
   ) {
     deferrals.defer();
 
-    let steamId: string | null = null;
-
     setTimeout(() => {
-      for (let i = 0; i < GetNumPlayerIdentifiers(String(player)); i++) {
-        const identifier = GetPlayerIdentifier(String(player), i);
+      const steamId = this.licenseController.getLicense(player);
 
-        if (identifier.startsWith("steam:")) {
-          steamId = identifier;
-          break;
-        }
-      }
-
-      if (!steamId) {
+      if (steamId === undefined) {
         setKickReason(`${prefix} Steam is required to play on this server.`);
         deferrals.done(`${prefix} Steam is required to play on this server.`);
       }

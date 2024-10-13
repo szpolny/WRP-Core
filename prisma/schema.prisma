@@ -12,6 +12,7 @@ model Player {
   id         Int         @id @default(autoincrement())
   name       String
   steamId    String      @unique
+  role       Role        @default(USER)
   characters Character[]
   createdAt  DateTime    @default(now())
   updatedAt  DateTime    @updatedAt
@@ -25,4 +26,9 @@ model Character {
   user      Player   @relation(fields: [playerId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+enum Role {
+  USER
+  ADMIN
 }

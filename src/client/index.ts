@@ -1,0 +1,1 @@
+SetMinimapHideFow(true);

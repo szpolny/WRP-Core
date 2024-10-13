@@ -7,4 +7,6 @@ author 'normanprice1'
 description 'RedM Roleplay framework'
 version '1.0.0'
 
+client_script 'build/client/index.js'
+
 server_script 'build/server/index.js'
