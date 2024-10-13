@@ -13,13 +13,13 @@ const baseOptions = {
 const targetOptions = [
   {
     target: "es2017",
-    entryPoints: ["client/index.ts"],
+    entryPoints: ["src/client/index.ts"],
     outfile: "./build/client/index.js",
     ...baseOptions,
   },
   {
     target: "node16",
-    entryPoints: ["server/index.ts"],
+    entryPoints: ["src/server/index.ts"],
     platform: "node",
     outfile: "./build/server/index.js",
     plugins: [filelocPlugin()],
